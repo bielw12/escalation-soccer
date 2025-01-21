@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escalação do Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #938e8e;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('https://via.placeholder.com/1920x1080');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.7);
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: #2d87d3;
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 0px 0px 10px #05af71;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        .container section {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .container section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: #2d87d3;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input:focus, button:focus {
+            border-color: #2d87d3;
+            outline: none;
+        }
+
+        button {
+            background-color: #2d87d3;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+        }
+
+        button:hover {
+            background-color: #2369a1;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.9);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0;
+        }
+
+        li {
+            background: #e8f4fd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+        }
+
+        .theme-toggle {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .info-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Modo escuro com tema neon */
+        body.dark-theme {
+            background-color: #222;
+            color: #f4f4f9;
+        }
+
+        body.dark-theme header {
+            background: #111;
+        }
+
+        body.dark-theme h1 {
+            color: #00ffe6;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 1);
+        }
+
+        body.dark-theme h2 {
+            color: #05af71;
+        }
+
+        body.dark-theme input,
+        body.dark-theme button {
+            border-color: #05af71;
+        }
+
+        body.dark-theme button {
+            background-color: #05af71;
+            color: #111;
+        }
+
+        body.dark-theme button:hover {
+            background-color: #05af71;
+        }
+
+        body.dark-theme ul li {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.9);
+        }
+
+        body.dark-theme .info-text {
+            color: #bbb;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background">
+        <img src="/img/campo-futebol.jg" alt="">
+    </div>
+
+    <header>
+        <h1>Escalação do Time</h1>
+    </header>
+    
+    <div class="container">
+        <section id="add-player">
+            <h2>Escalar Jogador</h2>
+            <label for="position">Qual a posição do jogador?</label>
+            <input type="text" id="position" placeholder="Ex: Atacante">
+    
+            <label for="name">Nome do jogador:</label>
+            <input type="text" id="name" placeholder="Ex: João Silva">
+    
+            <label for="number">Número na camisa:</label>
+            <input type="number" id="number" placeholder="Ex: 10">
+    
+            <button onclick="addPlayer()">Adicionar à escalação</button>
+            <p class="info-text">Preencha todos os campos antes de adicionar o jogador.</p>
+        </section>
+    
+        <section id="remove-player">
+            <h2>Remover Jogador</h2>
+            <label for="remove-number">Qual o número do jogador que deseja remover?</label>
+            <input type="number" id="remove-number" placeholder="Ex: 10">
+    
+            <button onclick="removePlayer()">Remover da escalação</button>
+            <p class="info-text">Insira o número exato para encontrar e remover o jogador.</p>
+        </section>
+    
+        <section id="team-list">
+            <h2>Lista do Time</h2>
+            <ul id="players"></ul>
+        </section>
+    
+        <div class="theme-toggle">
+            <button onclick="toggleTheme()">Alternar Tema</button>
+            <p class="info-text">Clique para mudar entre os modos claro e escuro.</p>
+        </div>
+    </div>
+    
+    <script>
+        const playersList = document.getElementById('players');
+    
+        function addPlayer() {
+            const position = document.getElementById('position').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const number = document.getElementById('number').value.trim();
+    
+            if (!position || !name || !number) {
+                alert('Por favor, preencha todos os campos para escalar um jogador.');
+                return;
+            }
+    
+            if (confirm(`Deseja adicionar ${name}, que joga como ${position} e veste a camisa Nº ${number}, à escalação?`)) {
+                const li = document.createElement('li');
+                li.textContent = `${position} - ${name} (Camisa Nº ${number})`;
+                li.dataset.number = number;
+                playersList.appendChild(li);
+    
+                document.getElementById('position').value = '';
+                document.getElementById('name').value = '';
+                document.getElementById('number').value = '';
+            }
+        }
+    
+        function removePlayer() {
+            const number = document.getElementById('remove-number').value.trim();
+    
+            if (!number) {
+                alert('Por favor, insira o número do jogador a ser removido.');
+                return;
+            }
+    
+            const player = [...playersList.children].find(li => li.dataset.number === number);
+    
+            if (player) {
+                if (confirm(`Deseja remover o jogador com a camisa Nº ${number}?`)) {
+                    playersList.removeChild(player);
+                }
+            } else {
+                alert('Jogador não encontrado na lista.');
+            }
+        }
+    
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+    
+            if (document.body.classList.contains('dark-theme')) {
+                document.body.style.backgroundColor = '#222';
+                document.body.style.color = '#f4f4f9';
+            } else {
+                document.body.style.backgroundColor = '#f4f4f9';
+                document.body.style.color = '#222';
+            }
+        }
+    </script>
+</body>
+</html>
